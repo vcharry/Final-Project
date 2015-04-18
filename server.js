@@ -39,4 +39,10 @@ app.post("/login", passport.authenticate('local'), function (req, res) {
 
 
 
-app.listen(3000);
+// Needs to work remotely and locally
+var ip = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
+// Only defined when running remotely
+var port = process.env.OPENSHIFT_NODEJS_PORT || 3000;
+
+//app.listen(3000);
+app.listen(port, ip);

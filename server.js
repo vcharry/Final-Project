@@ -1,5 +1,5 @@
-var mongoose = require('mongoose');
-var db = mongoose.connect('mongodb://localhost/test');
+//var mongoose = require('mongoose');
+//var db = mongoose.connect('mongodb://localhost/test');
 
 var express = require('express');
 var app = express();

@@ -21,19 +21,25 @@
 
 <title></title>
 </head>
-<body ng-app="Passport">
+<body ng-app="AllThingsCars">
     <div class="container">
-        <nav ng-controller="NavCtrl">
-            <a href="#home">Home</a>
-            <span ng-show="!currentUser">
-                <a href="#login">Login</a>
-                <a href="#register">Register</a>
-            </span>
-            <span ng-show="currentUser">
-                <a href="#profile">Profile</a>
-                <a href="#contact">Contact</a>
-                <a href="#logout" ng-click="logout()">Logout</a>
-            </span>
+        <nav class="navbar navbar-inverse" ng-controller="NavCtrl">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#home">All Things Cars</a>
+                </div>
+                <div>
+                    <ul class="nav navbar-nav navbar-right" ng-show="!currentUser">
+                        <li><a href="#login">Login</a></li>
+                        <li><a href="#register">Register</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right" ng-show="currentUser">
+                        <li><a href="#profile">Profile</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="#logout" ng-click="logout()">Logout</a></li>
+                    </ul>
+                </div>
+            </div>
         </nav>
         <div ng-view>
         </div>

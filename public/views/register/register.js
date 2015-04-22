@@ -1,6 +1,7 @@
 ﻿app.controller("RegisterCtrl", function ($scope, $http, $location, $rootScope) {
 
-    $scope.message = 'Woo!'
+    $rootScope.message = 'Woo!'
+
     $scope.register = function (user) {
         console.log(user);
         if (user.password != user.password2 || !user.password || !user.password2) {
@@ -13,6 +14,9 @@
                 if (response != null) {
                     $rootScope.currentUser = response;
                     $location.url("/login");
+                }
+                else {
+                    $rootScope.message = "That username already exists! Please select a new one!"
                 }
             });
         }

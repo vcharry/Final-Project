@@ -1,4 +1,4 @@
-﻿var app = angular.module("Passport", ["ngRoute"]);
+﻿var app = angular.module("AllThingsCars", ["ngRoute"]);
 
 app.config(function($routeProvider) {
     $routeProvider
@@ -14,7 +14,8 @@ app.config(function($routeProvider) {
         controller: 'RegisterCtrl'
     })
     .when('/profile', {
-        templateUrl: 'views/profile/profile.html'
+        templateUrl: 'views/profile/profile.html',
+        controller: 'ProfileCtrl'
     })
     .when('/contact', {
         templateUrl: 'views/contact/contact.html'

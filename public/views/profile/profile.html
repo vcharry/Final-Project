@@ -4,8 +4,11 @@
     <title></title>
 </head>
 <body>
-    <h1> profile.html </h1>
+    <h2>Welcome, {{currentUser.username}}! </h2>
     {{currentUser}}
+
+
+    
 
     <h2>Updates</h2>
     <input ng-model="currentUser.username" class="form-control" /><br />
@@ -13,7 +16,7 @@
     <input ng-model="currentUser.email" class="form-control" /><br />
     <button ng-click="update(currentUser)">Update</button>
 
-    <div ng-show="currentUser.username == 'valcharry'">
+    <div ng-show="currentUser.username == 'admin'">
         <h1>Admin</h1>
         <h2>User List</h2>
         <table class="table table-striped">
@@ -28,7 +31,6 @@
                 <td><button ng-click="update(user)">&check;</button>
             </tr>
 
-            </tr>
             <tr ng-repeat="user in users">
                 <td>{{user._id}}</td>
                 <td>{{user.username}}</td>

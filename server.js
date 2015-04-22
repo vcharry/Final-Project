@@ -11,7 +11,7 @@ var mongoose = require('mongoose');
 
 
 // default to a 'localhost' configuration:
-var connection_string = '127.0.0.1:27017/finalproject';
+var connection_string = 'mongodb://localhost/test';
 // if OPENSHIFT env variables are present, use the available connection info:
 if (process.env.OPENSHIFT_MONGODB_DB_PASSWORD) {
     connection_string = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
@@ -33,19 +33,18 @@ var UserSchema = new mongoose.Schema({
 
 var UserModel = mongoose.model('UserModel', UserSchema);
 
-/*
+
 var EdmundsApiKey = '6uxrsuqw542pu8b7d8nx2gj6';
 var client = new EdmundsClient({ apiKey: EdmundsApiKey });
 
-client.decodeVin({ vin: 'SOME-VIN-HERE' }, function(err, res) {
-      console.log(res.make);
-      console.log(res.model);
-    });*/
+client.getAllModelsByMake({ make: 'audi' }, function (err, res) {
+      console.log(res);
+    });
 
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 app.use(multer()); // for parsing multipart/form-data
-//app.use(session({ secret: 'this is the secret' }));
+app.use(session({ secret: 'this is the secret', resave: true, saveUninitialized: true }));
 app.use(cookieParser())
 app.use(passport.initialize());
 app.use(passport.session());
@@ -110,6 +109,7 @@ var auth = function (req, res, next) {
 };
 
 app.get("/rest/user", auth, function (req, res) {
+    console.log("in get");
     UserModel.find(function (err, users) {
         res.json(users);
     });

@@ -1,8 +1,9 @@
-﻿app.controller('ProfileCtrl', function ($scope, $http) {
+﻿app.controller('ProfileCtrl', function ($scope, $http, $location) {
 
     $http.get("/rest/user")
     .success(function (users) {
         $scope.users = users;
+        console.log(users);
     });
 
     $scope.remove = function (user) {

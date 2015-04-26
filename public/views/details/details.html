@@ -3,14 +3,15 @@
         <h4>Note: All data is provided for by Edmunds.com and their API.</h4>
         <div class="container">
             <div class="row">
-                <h2>{{currCar[2] + " " + currCar[0] + " " + currCar[1]}}</h2>
-                <button ng-show="((isUserFavorite == 0) && currentUser) || (!currentUser)" 
-                        class="btn btn-warning pull-left"  ng-click="favoriteCar()">Favorite <span class="glyphicon glyphicon-star"></span></button>
-                <button ng-show="(isUserFavorite == 1) && currentUser" 
-                        class="btn btn-danger pull-left" role="button" ng-click="unfavoriteCar()">Unfavorite <span class="glyphicon glyphicon-star-empty"></span></button>
+                <h2>{{currCar.year + " " + currCar.make + " " + currCar.model}}</h2>
+                <button ng-hide="((isUserFavorite == 1) && currentUser)" 
+                        class="btn btn-warning pull-left"  ng-click="favoriteCar(currentUser)">Favorite <span class="glyphicon glyphicon-star"></span></button>
+                <button ng-show="(isUserFavorite == 1) && currentUser"
+                        class="btn btn-danger pull-left" role="button" ng-click="unfavoriteCar(currentUser)">
+                    Unfavorite <span class="glyphicon glyphicon-star-empty"></span>
+                </button>
             </div>
             
-
             <br />
             <div class="alert alert-warning" role="alert" ng-show="promptLogin == 1">
                 <button type="button" class="close" aria-label="Close" ng-click="promptLogin = 0"><span aria-hidden="true">&times;</span></button>
@@ -34,19 +35,7 @@
 
         <br />
 
-        <div class="container-fluid col-md-6">
-            <div class=" row">
-                <div class="thumbnail">
-                    <img src="" alt="...">
-                    <div class="caption">
-                        <h3>COMING SOON</h3>
-                        <p>...</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="container-fluid col-md-6" ng-show="detailsFlag != 0">
+        <div class="container-fluid" ng-show="detailsFlag != 0">
             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                 <div class="panel panel-default">
                     <div class="panel-heading" role="tab" id="Info"
@@ -206,5 +195,42 @@
                 </div> <!--Options Panel-->
             </div> <!--/panel group--->
         </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xs-6" ng-repeat="photo in photoInfoList | filter: photo.width = 500">
+                    <a title="{{photo.title}}">
+                        <img class="thumbnail img-responsive" ng-src="{{photo.href}}" />
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <br />
+        <div class="panel panel-default">
+            <div class="panel-heading">Comments</div>
+            <div class="panel-body">
+                <ul class="list-group">
+                    <li class="list-group-item" ng-repeat="c in comments"><strong>{{c.user}}:</strong> {{c.comment}}</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row" ng-show="currentUser">
+            <div class="form-group">
+                <label for="comment">{{currentUser.username}}, Leave a comment!:</label>
+                <textarea id="comment" rows="4" class="form-control" ng-model="userComment"></textarea>
+            </div>
+            <button class="btn btn-success pull-right" ng-click="submit(userComment)">Submit</button>
+        </div>
+
+        <div class="row" ng-show="!currentUser">
+            <div class="form-group">
+                <label for="comment"><a href="#login" class="btn btn-primary">Login</a> or <a href="#register" class="btn btn-success">Register</a> to leave a comment!:</label>
+                <textarea id="comment" rows="4" class="form-control" ng-model="userComment"></textarea>
+            </div>
+            <button class="btn btn-success pull-right disabled">Submit</button>
+        </div>
+
+
     </div> <!--/container-->
 </div> <!--/jumbotron-->

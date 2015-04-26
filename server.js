@@ -27,11 +27,42 @@ var UserSchema = new mongoose.Schema({
     username: String,
     password: String,
     email: String,
-    favorites: [String],
-    following: [String]
+    favorites: [{
+        make: String,
+        model: String,
+        year: Number,
+        yearID: Number,
+        makeNiceName: String,
+        modelNiceName: String
+    }],
+    following: [String],
+    comments: [{
+        make: String,
+        model: String,
+        year: Number,
+        yearID: Number,
+        makeNiceName: String,
+        modelNiceName: String,
+        comment: String
+    }]
 });
 
 var UserModel = mongoose.model('UserModel', UserSchema);
+
+var CarDetailsSchema = new mongoose.Schema({
+    make: String,
+    model: String,
+    year: Number,
+    yearID: Number,
+    makeNiceName: String,
+    modelNiceName: String,
+    comments: [{
+        user: String,
+        comment: String
+    }]
+});
+
+var CarDetailsModel = mongoose.model('CarDetailsModel', CarDetailsSchema);
 /*
 var CarSchema = new mongoose.Schema({
     edmundsID: String,
@@ -40,14 +71,8 @@ var CarSchema = new mongoose.Schema({
     years
 })*/
 
-
 var EdmundsApiKey = '6uxrsuqw542pu8b7d8nx2gj6';
 var client = new EdmundsClient({ apiKey: EdmundsApiKey });
-/*
-client.getAllModelsByMake({ make: 'audi' }, function (err, res) {
-      console.log(res);
-});
-*/
 
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
@@ -108,6 +133,58 @@ app.post('/register', function (req, res) {
         });
     });
 });
+
+app.post('/rest/car', function (req, res) {
+    var newCar = req.body;
+    console.log(newCar);
+    CarDetailsModel.findOne({ make: newCar.make, model: newCar.model, year: newCar.year }, function (err, car) {
+        console.log(car);
+        // car doesnt exist
+        if (car == null) {
+            // create car
+            car = new CarDetailsModel(req.body);
+            car.save(function (err, car) {
+                CarDetailsModel.findOne(car, function (err, car) {
+                    res.json(car);
+                });
+            });
+        }
+        // car exists, so return whats currently in DB
+        else {
+            CarDetailsModel.findOne(car, function (err, car) {
+                console.log(car);
+                console.log(newCar);
+
+            });
+        }
+    });
+});
+
+app.get("/rest/car", function (req, res) {
+    console.log("in get cars");
+    CarDetailsModel.find(function (err, cars) {
+        res.json(cars);
+    });
+});
+
+app.put("/rest/car/:id", function (req, res) {
+    CarDetailsModel.findById(req.params.id, function (err, car) {
+        car.update(req.body, function (err, count) {
+            CarDetailsModel.find(function (err, cars) {
+                res.json(cars);
+            });
+        });
+    });
+});
+
+
+app.get("/carComments", function (req, res) {
+    console.log("in comments");
+    CarDetailsModel.find(function (err, cars) {
+        res.json(cars);
+    });
+});
+
 
 var auth = function (req, res, next) {
     if (!req.isAuthenticated())

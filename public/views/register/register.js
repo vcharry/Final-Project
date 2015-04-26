@@ -1,6 +1,6 @@
 ﻿app.controller("RegisterCtrl", function ($scope, $http, $location, $rootScope) {
 
-    $rootScope.message = 'Woo!'
+    //$rootScope.message = 'Woo!'
 
     $scope.register = function (user) {
         console.log(user);

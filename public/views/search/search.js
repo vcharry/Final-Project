@@ -12,9 +12,9 @@
     
     $scope.search = function () {
 
-        var make = $scope.myCarMake;
-        var model = $scope.myCarModel;
-        var year = $scope.myCarYear;
+        var myMake = $scope.myCarMake;
+        var myModel = $scope.myCarModel;
+        var myYear = $scope.myCarYear;
 
         /* 
         make object:
@@ -26,9 +26,9 @@
         */
 
         console.log("Searching..");
-        console.log("make: ", make);
-        console.log("model: ", model);
-        console.log("year: ", year);
+        console.log("make: ", myMake);
+        console.log("model: ", myModel);
+        console.log("year: ", myYear);
 
         var allCars = [];
         var allMakes = $scope.makes;
@@ -38,14 +38,14 @@
         for (i = 0; i < allMakes.length; i++) {
             for (j = 0; j < allMakes[i].models.length; j++) {
                 for (k = 0; k < allMakes[i].models[j].years.length; k++) {
-                    var car = [
-                        allMakes[i].name,
-                        allMakes[i].models[j].name,
-                        allMakes[i].models[j].years[k].year,
-                        allMakes[i].models[j].years[k].id,
-                        allMakes[i].niceName,
-                        allMakes[i].models[j].niceName
-                    ];
+                    var car = {
+                        make: allMakes[i].name,
+                        model: allMakes[i].models[j].name,
+                        year:allMakes[i].models[j].years[k].year,
+                        yearID: allMakes[i].models[j].years[k].id,
+                        makeNiceName: allMakes[i].niceName,
+                        modelNiceName: allMakes[i].models[j].niceName
+                    };
                     allCars.push(car);
                     //console.log(car);
                 }
@@ -53,15 +53,15 @@
         }
         
         // If no make selected, send all
-        if (make == null) {
+        if (myMake == null) {
             $scope.resultList = allCars;
         }
         else {
             // If no model selected, send all models for make
-            if (model == null) {
+            if (myModel == null) {
                 var allModels = [];
                 for (i = 0; i < allCars.length; i++) {
-                    if (make.name == allCars[i][0]) {
+                    if (myMake.name == allCars[i].make) {
                         allModels.push(allCars[i]);
                     }
                 }
@@ -70,10 +70,10 @@
             }
             else {
                 // If no year selected, send all years per model
-                if (year == null) {
+                if (myYear == null) {
                     var allYears = [];
                     for (i = 0; i < allCars.length; i++) {
-                        if ((make.name == allCars[i][0]) && (model.name==allCars[i][1])) {
+                        if ((myMake.name == allCars[i].make) && (myModel.name==allCars[i].model)) {
                             allYears.push(allCars[i]);
                         }
                     }
@@ -84,7 +84,7 @@
                     // For a specific Make-Model-Car
                     var exactCar = [];
                     for (i = 0; i < allCars.length; i++) {
-                        if ((make.name == allCars[i][0]) && (model.name == allCars[i][1]) && (year.year == allCars[i][2])) {
+                        if ((myMake.name == allCars[i].make) && (myModel.name == allCars[i].model) && (myYear.year == allCars[i].year)) {
                             exactCar.push(allCars[i]);
                         }
                     }
@@ -99,28 +99,4 @@
         console.log($scope.resultList.length);
     };
 
-    /*
-    $scope.searchByMake = function () {
-        var make = $scope.carmake;
-        $http.get("/make/models", make)
-        .success(function (models) {
-            $scope.models = models;
-        })
-    }*/
-
-
-
-
-    //var carmodels = $scope.makes[$scope.carmake].models;
-    //console.log(carmodels);
-    //$scope.carmodels = carmake.models;
-    /*
-    var make = $scope.carmake;
-
-    $http.get("/make/models", make)
-    .success(function (models) {
-        $scope.models = models;
-        console.log(models);
-    })
-    */
 });

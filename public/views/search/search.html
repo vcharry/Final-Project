@@ -28,7 +28,7 @@
     <br />
     <div class="container">
         <div class="list-group">
-            <a ng-repeat="result in resultList" href="#details" class="list-group-item" ng-click="$root.currentCar = result">{{result[0]}} / {{result[1]}} / {{result[2]}}<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
+            <a ng-repeat="result in resultList" href="#details" class="list-group-item" ng-click="$root.currentCar = result">{{result.make}} / {{result.model}} / {{result.year}}<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
         </div>
     </div>
 </div>

@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <!-- Optional theme -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/final-project.css" />
 
     <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
     <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
@@ -18,10 +19,12 @@
     <script src="views/profile/profile.js"></script>
     <script src="views/nav/nav.js"></script>
     <script src="views/register/register.js"></script>
+    <script src="views/search/search.js"></script>
+    <script src="views/details/details.js"></script>
 
 <title></title>
 </head>
-<body ng-app="AllThingsCars">
+<body ng-app="AllThingsCars" class="cover">
     <div class="container">
         <nav class="navbar navbar-inverse" ng-controller="NavCtrl">
             <div class="container-fluid">
@@ -30,10 +33,12 @@
                 </div>
                 <div>
                     <ul class="nav navbar-nav navbar-right" ng-show="!currentUser">
+                        <li><a href="#search">Search</a></li>
                         <li><a href="#login">Login</a></li>
                         <li><a href="#register">Register</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right" ng-show="currentUser">
+                        <li><a href="#search">Search</a></li>
                         <li><a href="#profile">Profile</a></li>
                         <li><a href="#contact">Contact</a></li>
                         <li><a href="#logout" ng-click="logout()">Logout</a></li>

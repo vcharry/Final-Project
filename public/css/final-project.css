@@ -1,0 +1,10 @@
+﻿.cover{
+    background-image: url('../images/Audi-R8-Matte-Black.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+.colorwhite{
+    background-color: white;
+}

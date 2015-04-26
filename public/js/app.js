@@ -20,6 +20,14 @@ app.config(function($routeProvider) {
     .when('/contact', {
         templateUrl: 'views/contact/contact.html'
     })
+    .when('/search', {
+        templateUrl: 'views/search/search.html',
+        controller: 'SearchCtrl'
+    })
+    .when('/details', {
+        templateUrl: 'views/details/details.html',
+        controller: 'DetailsCtrl'
+    })
     .otherwise({
         redirectTo: '/home'
     })

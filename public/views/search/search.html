@@ -1,0 +1,35 @@
+﻿<div class="jumbotron">
+    <div class="container">
+        <form role="form">
+            <div class="form-group col-xs-8 col-sm-4">
+                <label for="SelMake">Make:</label>
+                <select id="SelMake" class="form-control" ng-model="myCarMake" ng-options="make.name for make in makes">
+                    <option value="">-- Choose Make --</option>
+                </select>
+            </div>
+            <div class="form-group col-xs-8 col-sm-4">
+                <label for="SelModel">Model:</label>
+                <select id="SelModel" class="form-control" ng-model="myCarModel" ng-options="model.name for model in myCarMake.models">
+                    <option value="">-- Choose Model --</option>
+                </select>
+            </div>
+            <div class="form-group col-xs-8 col-sm-4">
+                <label for="SelYear">Year:</label>
+                <select id="SelYear" class="form-control" ng-model="myCarYear" ng-options="year.year for year in myCarModel.years">
+                    <option value="">-- Choose Year --</option>
+                </select>
+            </div>
+            <div class="col-xs-10">
+                <button class="btn btn-danger btn-md col-xs-4" type="button" ng-click="search()"><span class="glyphicon glyphicon-search"></span> Search</button>
+            </div>
+        </form>
+    </div>
+    <br />
+    <br />
+    <div class="container">
+        <div class="list-group">
+            <a ng-repeat="result in resultList" href="#details" class="list-group-item" ng-click="$root.currentCar = result">{{result[0]}} / {{result[1]}} / {{result[2]}}<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
+        </div>
+    </div>
+</div>
+

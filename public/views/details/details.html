@@ -1,0 +1,210 @@
+﻿<div class="jumbotron">
+    <div class="container">
+        <h4>Note: All data is provided for by Edmunds.com and their API.</h4>
+        <div class="container">
+            <div class="row">
+                <h2>{{currCar[2] + " " + currCar[0] + " " + currCar[1]}}</h2>
+                <button ng-show="((isUserFavorite == 0) && currentUser) || (!currentUser)" 
+                        class="btn btn-warning pull-left"  ng-click="favoriteCar()">Favorite <span class="glyphicon glyphicon-star"></span></button>
+                <button ng-show="(isUserFavorite == 1) && currentUser" 
+                        class="btn btn-danger pull-left" role="button" ng-click="unfavoriteCar()">Unfavorite <span class="glyphicon glyphicon-star-empty"></span></button>
+            </div>
+            
+
+            <br />
+            <div class="alert alert-warning" role="alert" ng-show="promptLogin == 1">
+                <button type="button" class="close" aria-label="Close" ng-click="promptLogin = 0"><span aria-hidden="true">&times;</span></button>
+                <strong>Sorry!</strong> You aren't currently logged in!
+                <a type="button" class="btn btn-primary" href="#login">Login</a> or 
+                <a type="button" class="btn btn-success" href="#register">Register</a>
+            </div>
+
+            <form role="form" class="form-inline">
+                <div class="form-group">
+                    <label for="SelStyle">Style:</label>
+                    <select id="SelStyle" class="form-control" ng-model="carStyle"
+                            ng-options="style.name for style in carDetails.styles"
+                            ng-change="change()">
+                        <option value="">-- Choose Style --</option>
+                    </select>
+                </div>
+            </form>
+        
+        </div>
+
+        <br />
+
+        <div class="container-fluid col-md-6">
+            <div class=" row">
+                <div class="thumbnail">
+                    <img src="" alt="...">
+                    <div class="caption">
+                        <h3>COMING SOON</h3>
+                        <p>...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid col-md-6" ng-show="detailsFlag != 0">
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="Info"
+                         data-target="#info1" data-toggle="collapse" data-parent="#accordion" aria-expanded="true" aria-controls="info1">
+                        <h4 class="panel-title">
+                            General Vehicle Details
+                        </h4>
+                    </div>
+                    <div id="info1" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="Info">
+                        <div class="panel-body">
+                            <ul>
+                                <!-- <li><b>EPA Class:</b> {{categories.EPAClass}}</li> -->
+                                <li><b>Market:</b> {{categories.market || 'N/A'}}</li>
+                                <li><b>Type:</b> {{categories.vehicleType || 'N/A'}}</li>
+                                <li><b>Size:</b> {{categories.vehicleSize || 'N/A'}}</li>
+                                <li><b>Style:</b> {{categories.vehicleStyle || 'N/A'}}</li>
+                                <li><b>Doors:</b> {{numDoors || 'N/A'}}</li>
+                                <li><b>Drive:</b> {{drivenWheels || 'N/A'}}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div> <!--Info Panel-->
+                <div class="panel panel-default">
+                    <div class="panel-heading collapsed" role="tab" id="Price"
+                         data-target="#price2" data-toggle="collapse" data-parent="#accordion" aria-expanded="false" aria-controls="price2">
+                        <h4 class="panel-title">
+                            Price
+                        </h4>
+                    </div>
+                    <div id="price2" class="panel-collapse collapse" role="tabpanel" aria-labelledby="Price">
+                        <div class="panel-body">
+                            <ul>
+                                <li><b>Base MSRP:</b> {{(price.baseMSRP | currency) || 'N/A'}}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div> <!--Price Panel-->
+                <div class="panel panel-default">
+                    <div class="panel-heading collapsed" role="tab" id="MPG"
+                         data-target="#mpg3" data-toggle="collapse" data-parent="#accordion" aria-expanded="false" aria-controls="mpg3">
+                        <h4 class="panel-title">
+                            MPG
+                        </h4>
+                    </div>
+                    <div id="mpg3" class="panel-collapse collapse" role="tabpanel" aria-labelledby="MPG">
+                        <div class="panel-body">
+                            <ul>
+                                <li><b>City:</b> {{mpg.city || 'N/A'}}</li>
+                                <li><b>Highway:</b> {{mpg.highway || 'N/A'}}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div><!--MPG Panel-->
+                <div class="panel panel-default">
+                    <div class="panel-heading collapsed" role="tab" id="Colors"
+                         data-target="#colors5" data-toggle="collapse" data-parent="#accordion" aria-expanded="false" aria-controls="colors5">
+                        <h4 class="panel-title">
+                            Colors
+                        </h4>
+                    </div>
+                    <div id="colors5" class="panel-collapse collapse" role="tabpanel" aria-labelledby="Colors">
+                        <div class="panel-body">
+                            <ul ng-if="colors.length == 0">
+                                <li>N/A</li>
+                            </ul>
+                            <form role="form" ng-repeat="obj in colors">
+                                <div class="form-group">
+                                    <label for="obj.category">{{obj.category || 'N/A'}}:</label>
+                                    <select multiple class="form-control" id="obj.category">
+                                        <option ng-repeat="color in colors[$index].options">{{color.name || 'N/A'}}</option>
+                                    </select>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div><!--Color Panel-->
+                <div class="panel panel-default">
+                    <div class="panel-heading collapsed" role="tab" id="Trim"
+                         data-target="#trim6" data-toggle="collapse" data-parent="#accordion" aria-expanded="false" aria-controls="trim6">
+                        <h4 class="panel-title">
+                            Trim
+                        </h4>
+                    </div>
+                    <div id="trim6" class="panel-collapse collapse" role="tabpanel" aria-labelledby="Trim">
+                        <div class="panel-body">
+                            <ul>
+                                <li>{{trim || 'N/A'}}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div><!--Trim Panel-->
+                <div class="panel panel-default">
+                    <div class="panel-heading collapsed" role="tab" id="Engine"
+                         data-target="#engine7" data-toggle="collapse" data-parent="#accordion" aria-expanded="false" aria-controls="engine7">
+                        <h4 class="panel-title">
+                            Engine
+                        </h4>
+                    </div>
+                    <div id="engine7" class="panel-collapse collapse" role="tabpanel" aria-labelledby="Engine">
+                        <div class="panel-body">
+                            <ul>
+                                <li><b>Name:</b> {{engine.name || 'N/A'}}</li>
+                                <li><b>Compression Ratio:</b> {{engine.compressionRatio || 'N/A'}}</li>
+                                <li><b>Compressor Type:</b> {{engine.compressorType || 'N/A'}}</li>
+                                <li><b>Cylinder:</b> {{engine.cylinder || 'N/A'}}</li>
+                                <li><b>Size:</b> {{engine.size || 'N/A'}}</li>
+                                <li><b>Displacement:</b> {{engine.displacement || 'N/A'}}</li>
+                                <li><b>Configuration:</b> {{engine.configuration || 'N/A'}}</li>
+                                <li><b>Fuel Type:</b> {{engine.fuelType || 'N/A'}}</li>
+                                <li><b>Horsepower:</b> {{engine.horsepower || 'N/A'}}</li>
+                                <li><b>Torque:</b> {{engine.torque || 'N/A'}}</li>
+                                <li><b>Total Valves:</b> {{engine.totalValves || 'N/A'}}</li>
+                                <li><b>Type:</b> {{engine.type || 'N/A'}}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div><!--Engine Panel-->
+                <div class="panel panel-default">
+                    <div class="panel-heading collapsed" role="tab" id="Trans"
+                         data-target="#trans8" data-toggle="collapse" data-parent="#accordion" aria-expanded="false" aria-controls="trans8">
+                        <h4 class="panel-title">
+                            Transmission
+                        </h4>
+                    </div>
+                    <div id="trans8" class="panel-collapse collapse" role="tabpanel" aria-labelledby="Trans">
+                        <div class="panel-body">
+                            <ul>
+                                <li><b>Name:</b> {{transmission.name || 'N/A'}}</li>
+                                <li><b>Number of Speeds:</b> {{transmission.numberOfSpeeds || 'N/A'}}</li>
+                                <li><b>Type:</b> {{transmission.transmissionType || 'N/A'}}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div> <!--Transmission Panel-->
+                <div class="panel panel-default">
+                    <div class="panel-heading collapsed" role="tab" id="Options"
+                         data-target="#options9" data-toggle="collapse" data-parent="#accordion" aria-expanded="false" aria-controls="options9">
+                        <h4 class="panel-title">
+                            Optional Add-Ons
+                        </h4>
+                    </div>
+                    <div id="options9" class="panel-collapse collapse" role="tabpanel" aria-labelledby="Options">
+                        <div class="panel-body">
+                            <ul ng-if="optional.length == 0">
+                                <li>N/A</li>
+                            </ul>
+                            <form role="form" ng-repeat="obj in optional">
+                                <div class="form-group">
+                                    <label for="obj.category">{{obj.category || 'N/A'}}:</label>
+                                    <select multiple class="form-control" id="obj.category">
+                                        <option ng-repeat="opt in optional[$index].options">{{opt.name || 'N/A'}}</option>
+                                    </select>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div> <!--Options Panel-->
+            </div> <!--/panel group--->
+        </div>
+    </div> <!--/container-->
+</div> <!--/jumbotron-->

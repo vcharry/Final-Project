@@ -32,14 +32,22 @@ var UserSchema = new mongoose.Schema({
 });
 
 var UserModel = mongoose.model('UserModel', UserSchema);
+/*
+var CarSchema = new mongoose.Schema({
+    edmundsID: String,
+    name: String,
+    niceName: String,
+    years
+})*/
 
 
 var EdmundsApiKey = '6uxrsuqw542pu8b7d8nx2gj6';
 var client = new EdmundsClient({ apiKey: EdmundsApiKey });
-
+/*
 client.getAllModelsByMake({ make: 'audi' }, function (err, res) {
       console.log(res);
-    });
+});
+*/
 
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
@@ -153,6 +161,58 @@ app.post("/rest/user", auth, function (req, res) {
     });
 });
 
+app.get("/makes", function (req, res) {
+    //console.log("in makes");
+    client.getAllMakes(function (err, makes) {
+        //console.log(res.makes);
+        res.json(makes);
+    });
+});
+
+app.post("/make/model/year", function (req, res) {
+    console.log("in models");
+    console.log(req.body);
+    client.getModelYearDetails(req.body, function (err, details) {
+        //console.log(details);
+        res.json(details);
+    });
+});
+
+app.post("/styleId/details", function (req, res) {
+    console.log("in details");
+    console.log(req.body);
+    client.getStyleDetails(req.body, function (err, details) {
+        //console.log(details);
+        res.json(details);
+    });
+});
+
+app.post("/styleId/photos", function (req, res) {
+    console.log("in photos");
+    console.log(req.body);
+    client.getPhotosByStyle(req.body, function (err, photos) {
+        console.log(photos);
+        res.json(photos);
+    });
+});
+
+app.post("/styleId/colors", function (req, res) {
+    console.log("in colors");
+    console.log(req.body);
+    client.getAllColorsByStyle(req.body, function (err, colors) {
+        //console.log(colors);
+        res.json(colors);
+    });
+});
+
+app.post("/styleId/options", function (req, res) {
+    console.log("in models");
+    console.log(req.body);
+    client.getAllOptionsByStyle(req.body, function (err, options) {
+        //console.log(options);
+        res.json(options);
+    });
+});
 
 
 // Needs to work remotely and locally

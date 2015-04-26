@@ -8,41 +8,60 @@
     {{currentUser}}
 
 
-    
-
-    <h2>Updates</h2>
-    <input ng-model="currentUser.username" class="form-control" /><br />
-    <input ng-model="currentUser.password" class="form-control" type="password" /><br />
-    <input ng-model="currentUser.email" class="form-control" /><br />
-    <button ng-click="update(currentUser)">Update</button>
-
-    <div ng-show="currentUser.username == 'admin'">
-        <h1>Admin</h1>
-        <h2>User List</h2>
-        <table class="table table-striped">
-            <tr>
-                <td>&nbsp;</td>
-                <td><input ng-model="user.username" class="form-control" /></td>
-                <td><input ng-model="user.password" class="form-control" type="password" /></td>
-                <td><input ng-model="user.email" class="form-control" /></td>
-                <td><input ng-model="user.favorites" class="form-control" /></td>
-                <td><input ng-model="user.following" class="form-control" /></td>
-                <td><button ng-click="add(user)">&plus;</button>
-                <td><button ng-click="update(user)">&check;</button>
-            </tr>
-
-            <tr ng-repeat="user in users">
-                <td>{{user._id}}</td>
-                <td>{{user.username}}</td>
-                <td>&nbsp;</td>
-                <td>{{user.email}}</td>
-                <td>{{user.roles}}</td>
-                <td>{{user.favorites}}</td>
-                <td>{{user.following}}</td>
-                <td><button ng-click="remove(user)">X</button>
-                <td><button ng-click="select(user)">...</button>
-            </tr>
-        </table>
+    <div class="container-fluid">
+        <div class="panel panel-default">
+            <div class="panel-heading">Update User Info</div>
+            <div class="panel-body">
+                <form>
+                    <div class="form-group">
+                        <label for="currentUsername">Username</label>
+                        <input ng-model="currentUser.username" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="currentPassword">Password</label>
+                        <input ng-model="currentUser.password" class="form-control" type="password" />
+                    </div>
+                    <div class="form-group">
+                        <label for="currentEmail">Email</label>
+                        <input ng-model="currentUser.email" class="form-control" />
+                    </div>
+                </form>
+            </div>
+            <div class="panel-footer">
+                <button ng-click="update(currentUser)">Update</button>
+            </div>
+        </div>
     </div>
+
+    <div class="container" ng-show="currentUser.username == 'admin'">
+        <div class="panel-default">
+            <div class="panel-heading">Admin</div>
+            <table class="table colorwhite">
+                <tr>
+                    <td>&nbsp;</td>
+                    <td><input ng-model="user.username" class="form-control" /></td>
+                    <td><input ng-model="user.password" class="form-control" type="password" /></td>
+                    <td><input ng-model="user.email" class="form-control" /></td>
+                    <td><input ng-model="user.favorites" class="form-control" /></td>
+                    <td><input ng-model="user.following" class="form-control" /></td>
+                    <td><button ng-click="add(user)">&plus;</button>
+                    <td><button ng-click="update(user)">&check;</button>
+                </tr>
+
+                <tr ng-repeat="user in users">
+                    <td>{{user._id}}</td>
+                    <td>{{user.username}}</td>
+                    <td>&nbsp;</td>
+                    <td>{{user.email}}</td>
+                    <td>{{user.roles}}</td>
+                    <td>{{user.favorites}}</td>
+                    <td>{{user.following}}</td>
+                    <td><button ng-click="remove(user)">X</button>
+                    <td><button ng-click="select(user)">...</button>
+                </tr>
+            </table>
+        </div>
+    </div>
+
 </body>
 </html>
